@@ -1,5 +1,15 @@
 #include "sim.h"
 
+int setValue(int r, int c, char data, char** output) {
+    if (output[r][c] == '\0') {
+        output[r][c] = data;
+
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
 char** encode(int tot_rows, int tot_cols, char* msg) {
     if (tot_rows < 1) {
         printf("must have at least one row\n");
@@ -24,7 +34,7 @@ char** encode(int tot_rows, int tot_cols, char* msg) {
     }
 
     int end_of_msg = 0;
-    for (int row_c = tot_rows - 1; row_c >= 0; row_c--) {
+    for (int row_c = 0; row_c < tot_rows; row_c++) {
         int c = 0;
         int r = row_c;
         int col_c = 0;
@@ -36,12 +46,14 @@ char** encode(int tot_rows, int tot_cols, char* msg) {
 
             if (r < tot_rows && c < tot_cols) {
                 if (end_of_msg) {
-                    output[r][c] = '0';
-                    printf("(%d,%d): %c | %c\n", r, c, '0', *msg);
+                    setValue(r, c, 'x', output);
+                    //printf("(%d,%d): %c | %c\n", r, c, '0', *msg);
                 } else {
-                  output[r][c] = *msg;
-                  printf("(%d,%d): %c\n", r, c, *msg);
-                  msg++;
+                  int retcode = setValue(r, c, *msg, output);
+                  if (!retcode) {
+                      msg++;
+                  }
+                  //printf("(%d,%d): %c\n", r, c, *msg);
                 }
                 c++;
                 r++;

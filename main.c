@@ -2,9 +2,9 @@
 #include "sim.c"
 
 int main() {
-    char* msg = "This is a test message";
-    int rows = 7;
-    int cols = 7;
+    char* msg = "This is a test message. See if you can figure it out!";
+    int rows = 6;
+    int cols = 6;
     char* fname = "out.txt";
 
     printf("Encrypting message...\n");
